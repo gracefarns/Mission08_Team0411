@@ -17,18 +17,63 @@ namespace Mission08_Team0411.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var tasks = _repo.Tasks.ToList();
             // this would be for editing var blah = _repo.Tasks.FirstOrDefault(x => x.TaskId == 1);
-            return View(new Task());
+            return View(tasks);
         }
 
         [HttpPost]
-        public IActionResult Index(Task t)
+        public IActionResult Index(ToDo t)
         {
             if (ModelState.IsValid)
             {
                 _repo.AddTask(t);
             }
-            return View(new Task());
+            var tasks = _repo.Tasks.ToList();
+            return View(tasks);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var recordToEdit = _repo.Tasks
+                .Single(x => x.TaskId == id);
+
+            ViewBag.Category = _repo.Category
+                .OrderBy(x => x.CategoryName)
+                .ToList();
+
+            return View("Add_Edit", recordToEdit);
+
+        }
+
+        // post route to edit and update a task into the database
+        [HttpPost]
+        public IActionResult Edit(ToDo updatedInfo)
+        {
+            _repo.Update(updatedInfo);
+            _repo.SaveChanges(updatedInfo);
+            return RedirectToAction("Index");
+        }
+
+        // get route for the delete action that takes in the taskId
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var recordToDelete = _repo.Tasks
+                .Single(x => x.TaskId == id);
+
+            return View(// right here we need to have the delete.cshtml);
+        }
+
+        // post route that takes a task and deletes it
+        [HttpPost]
+        public IActionResult Delete(ToDo t)
+        {
+            _repo.Tasks.Remove(t);
+            _repo.SaveChanges(t);
+
+            return RedirectToAction("DeleteConfirmation");
         }
     }
 

@@ -1,32 +1,35 @@
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission08_Team0411.Models;
 
 namespace Mission08_Team0411.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private ITaskRepository _repo;
+        public HomeController(ITaskRepository temp) // make sure that this matches the context file camden made
         {
-            _logger = logger;
+            _repo = temp;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            // this would be for editing var blah = _repo.Tasks.FirstOrDefault(x => x.TaskId == 1);
+            return View(new Task());
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult Index(Task t)
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (ModelState.IsValid)
+            {
+                _repo.AddTask(t);
+            }
+            return View(new Task());
         }
     }
+
 }

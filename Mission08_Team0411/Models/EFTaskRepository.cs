@@ -1,0 +1,19 @@
+﻿namespace Mission08_Team0411.Models
+{
+    public class EFTaskRepository : ITaskRepository
+    {
+        private TasksContext _context;
+        public EFTaskRepository(TasksContext temp)
+        {
+            _context = temp;
+        }
+
+        public List<ToDo> Tasks => _context.Tasks.ToList();
+
+        public void AddTask(ToDo toDo)
+        {
+            _context.Add(toDo);
+            _context.SaveChanges();
+        }
+    }
+}

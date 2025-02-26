@@ -1,0 +1,33 @@
+@model Mission08_Team0411.Models.ToDo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Delete Confirmation</title>
+</head>
+<body>
+<div>
+    <h1 style="color: darkred"><b>Confirm Deletion?</b></h1>
+    <h3>@Model.Description, @Model.Category.Description, @Model.DueDate</h3>
+
+    <form method="post">
+        <!--Make delete functionality work by referencing the
+        TaskId-->
+        <input type="hidden" asp-for="TaskId"/>
+
+        <button type="submit">Delete?</button>
+        <br/>
+        <br/>
+
+        <!--If I cancel deletion, it will simply send you
+        back to the Task List page (aka the Home page/index)-->
+        <a class="btn btn-info" asp-controller="Home" asp-action="Index">Cancel</a>
+    </form>
+</div>
+</body>
+</html>

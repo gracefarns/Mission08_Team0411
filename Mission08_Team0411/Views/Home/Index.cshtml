@@ -1,8 +1,263 @@
-﻿@{
+﻿@model IEnumerable<Mission08_Team0411.Models.Task>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Sigma Tasks</title>
+    <style>
+        .container {
+            max-width: 95%;
+            margin: auto;
+        }
+
+        .row {
+            display: flex;
+            align-items: stretch; /* Ensures all columns in a row have the same height */
+            text-align: center;
+            flex-wrap: nowrap; /* Prevents columns from stacking */
+        }
+
+        .col-2, .col-5 {
+            display: flex;
+            align-items: center; /* Centers text vertically */
+            justify-content: center; /* Centers text horizontally */
+            padding: 20px;
+        }
+
+        .col-2 {
+            border: 2px solid black;
+            width: 140px; /* Fixed width */
+            min-width: 140px;
+            max-width: 140px;
+            text-align: center;
+            padding: 5px;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            white-space: normal;
+            display: block;
+        }
+
+        /* Resizes the text dynamically */
+        .col-2 h3 {
+            font-size: clamp(12px, 2.5vw, 18px); /* Auto-resizes based on screen width */
+            line-height: 1.1; /* Reduces extra spacing */
+        }
+
+        .col-5 {
+            border: 2px solid black;
+            flex: 1; /* Makes sure it distributes space evenly */
+            display: flex; /* Allows stacking content vertically */
+            flex-direction: column; /* Stacks title and list */
+            align-items: center; /* Centers the content horizontally */
+            justify-content: flex-start; /* Keeps the title at the top */
+            padding: 10px;
+        }
+
+        .col-5 h3 {
+            margin-bottom: 10px; /* Adds space between the title and the list */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px; /* Adds space between list items */
+        }
+
+
+        /* Make the blank top-left cell follow the same size as other .col-2 */
+        .row:first-child .col-2 {
+            flex: 0 0 130px; /* Same size as the "IMPORTANT" box */
+            max-width: 130px;
+        }
+
+
+        h1, h3, p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+    <!--Heading for Quadrant Box-->
+    <div class="row text-center">
+        <div class="col-2" style="border: none"><h1></h1></div>
+        <div class="col-10"><h1>Time Management Tasks</h1></div>
+    </div>
+
+    <!--Titles for URGENT and NOT Urgent Things-->
+    <div class="row">
+        <div class="col-2" style="border: none;"><h3></h3></div>
+        <div class="col-5"><h3>URGENT</h3></div>
+        <div class="col-5"><h3>NOT URGENT</h3></div>
+    </div>
+    
+    <!--IMPORTANT Row-->
+    <div class="row text-center">
+        <div class="col-2"><h3>IMPORTANT</h3></div>
+        <div class="col-5">
+            <h3 style="color: lightgreen;">Quadrant 1</h3>
+            
+            <!--Creating table structure for Quadrant 1-->
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead class="fw-bold">
+                    <tr>
+                        <td>Task</td>
+                        <td>Due Date</td>
+                        <td>Category</td>
+                        <td>Completed</td>
+                    </tr>
+                    </thead>
+                    
+                    <!--Calling model and specific structure of DB-->
+                    <tbody>
+                    @foreach (var task in Model.Where(t => t.Quadrant == 1))
+                    {
+                        <tr>
+                            <td>@task.Description</td>
+                            <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "No Due Date")</td>
+                            <td>@task.Category.Description</td>
+                            <td>@task.Completed</td>
+                            
+                            <!--Edit and Delete routes based on TaskId-->
+                            <td><a class="btn btn-info" asp-controller="Home" asp-action="Update" asp-route-id="@task.TaskId">Update</a></td>
+                            <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId">Delete</a></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        <div class="col-5">
+            <h3 style="color: lightsalmon;">Quadrant 2</h3>
+
+            <!--Creating table structure for Quadrant 2-->
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead class="fw-bold">
+                    <tr>
+                        <td>Task Description</td>
+                        <td>Due Date</td>
+                        <td>Category</td>
+                        <td>Completed</td>
+                    </tr>
+                    </thead>
+
+                    <!--Calling model and specific structure of DB-->
+                    <tbody>
+                    @foreach (var task in Model.Where(t => t.Quadrant == 2))
+                    {
+                        <tr>
+                            <td>@task.Description</td>
+                            <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "No Due Date")</td>
+                            <td>@task.Category.Description</td>
+                            <td>@task.Completed</td>
+
+                            <!--Edit and Delete routes based on TaskId-->
+                            <td><a class="btn btn-info" asp-controller="Home" asp-action="Update" asp-route-id="@task.TaskId">Update</a></td>
+                            <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId">Delete</a></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!--NOT IMPORTANT Row-->
+    <div class="row text-center">
+        <div class="col-2"><h3>NOT IMPORTANT</h3></div>
+        <div class="col-5">
+            <h3 style="color: lightblue;">Quadrant 3</h3>
+
+            <!--Creating table structure for Quadrant 3-->
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead class="fw-bold">
+                    <tr>
+                        <td>Task Description</td>
+                        <td>Due Date</td>
+                        <td>Category</td>
+                        <td>Completed</td>
+                    </tr>
+                    </thead>
+
+                    <!--Calling model and specific structure of DB-->
+                    <tbody>
+                    @foreach (var task in Model.Where(t => t.Quadrant == 3))
+                    {
+                        <tr>
+                            <td>@task.Description</td>
+                            <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "No Due Date")</td>
+                            <td>@task.Category.Description</td>
+                            <td>@task.Completed</td>
+                            
+                            <!--Edit and Delete routes based on TaskId-->
+                            <td><a class="btn btn-info" asp-controller="Home" asp-action="Update" asp-route-id="@task.TaskId">Update</a></td>
+                            <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId">Delete</a></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        <div class="col-5">
+            <h3 style="color: indianred;">Quadrant 4</h3>
+
+            <!--Creating table structure for Quadrant 4-->
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead class="fw-bold">
+                    <tr>
+                        <td>Task Description</td>
+                        <td>Due Date</td>
+                        <td>Category</td>
+                        <td>Completed</td>
+                    </tr>
+                    </thead>
+
+                    <!--Calling model and specific structure of DB-->
+                    <tbody>
+                    @foreach (var task in Model.Where(t => t.Quadrant == 4))
+                    {
+                        <tr>
+                            <td>@task.Description</td>
+                            <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "No Due Date")</td>
+                            <td>@task.Category.Description</td>
+                            <td>@task.Completed</td>
+
+                            <!--Edit and Delete routes based on TaskId-->
+                            <td><a class="btn btn-info" asp-controller="Home" asp-action="Update" asp-route-id="@task.TaskId">Update</a></td>
+                            <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId">Delete</a></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
 </div>
+
+<!--Add button at the bottom of the Quadrants-->
+<div><a asp-controller="Home" asp-action="AddTaskForm" class="btn btn-success btn-lg">➕ Add a New Task</a></div>
+
+</body>
+</html>

@@ -17,7 +17,7 @@ public partial class TasksContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
-    public virtual DbSet<Task> Tasks { get; set; }
+    public virtual DbSet<ToDo> Tasks { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("Data Source=tasks.db");
@@ -31,7 +31,7 @@ public partial class TasksContext : DbContext
             entity.Property(e => e.CategoryId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<Task>(entity =>
+        modelBuilder.Entity<ToDo>(entity =>
         {
             entity.HasOne(d => d.Category).WithMany(p => p.Tasks).HasForeignKey(d => d.CategoryId);
         });

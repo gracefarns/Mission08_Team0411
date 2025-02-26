@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mission08_Team0411.Models;
 
-public partial class Task
+public partial class ToDo
 {
     public int TaskId { get; set; }
 

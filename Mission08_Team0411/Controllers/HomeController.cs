@@ -17,18 +17,20 @@ namespace Mission08_Team0411.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var tasks = _repo.Tasks.ToList();
             // this would be for editing var blah = _repo.Tasks.FirstOrDefault(x => x.TaskId == 1);
-            return View(new Task());
+            return View(tasks);
         }
 
         [HttpPost]
-        public IActionResult Index(Task t)
+        public IActionResult Index(ToDo t)
         {
             if (ModelState.IsValid)
             {
                 _repo.AddTask(t);
             }
-            return View(new Task());
+            var tasks = _repo.Tasks.ToList();
+            return View(tasks);
         }
     }
 

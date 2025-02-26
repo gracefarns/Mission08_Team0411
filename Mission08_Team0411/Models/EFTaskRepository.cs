@@ -8,11 +8,11 @@
             _context = temp;
         }
 
-        public List<Task> Tasks => _context.Tasks.ToList();
+        public List<ToDo> Tasks => _context.Tasks.ToList();
 
-        public void AddTask(Task task)
+        public void AddTask(ToDo toDo)
         {
-            _context.Add(task);
+            _context.Add(toDo);
             _context.SaveChanges();
         }
     }

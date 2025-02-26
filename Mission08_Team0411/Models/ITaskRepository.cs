@@ -2,8 +2,8 @@
 {
     public interface ITaskRepository
     {
-        List<Task> Tasks { get; }
+        List<ToDo> Tasks { get; }
 
-        public void AddTask(Task task);
+        public void AddTask(ToDo toDo);
     }
 }

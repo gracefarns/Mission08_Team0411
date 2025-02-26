@@ -5,5 +5,9 @@
         List<ToDo> Tasks { get; }
 
         public void AddTask(ToDo toDo);
+      
+        public void SaveChanges(ToDo toDo);
+
+        public void Update(ToDo toDo);
     }
 }

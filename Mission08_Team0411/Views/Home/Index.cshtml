@@ -1,5 +1,10 @@
 ﻿@model List<Mission08_Team0411.Models.ToDo>
 
+@if (Model == null)
+{
+    <h2>Error: Model is null</h2>
+}
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -127,9 +132,9 @@
                     @foreach (var task in Model.Where(t => t.Quadrant == 1))
                     {
                         <tr>
-                            <td>@task.Description</td>
+                            <td>@task.TaskName</td>
                             <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "No Due Date")</td>
-                            <td>@task.Category.Description</td>
+                            <td>@task.Category.CategoryName ?? "No Category"</td>
                             <td>@task.Completed</td>
                             
                             <!--Edit and Delete routes based on TaskId-->
@@ -162,9 +167,9 @@
                     @foreach (var task in Model.Where(t => t.Quadrant == 2))
                     {
                         <tr>
-                            <td>@task.Description</td>
+                            <td>@task.TaskName</td>
                             <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "No Due Date")</td>
-                            <td>@task.Category.Description</td>
+                            <td>@task.Category.CategoryName ?? "No Category"</td>
                             <td>@task.Completed</td>
 
                             <!--Edit and Delete routes based on TaskId-->
@@ -202,9 +207,9 @@
                     @foreach (var task in Model.Where(t => t.Quadrant == 3))
                     {
                         <tr>
-                            <td>@task.Description</td>
+                            <td>@task.TaskName</td>
                             <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "No Due Date")</td>
-                            <td>@task.Category.Description</td>
+                            <td>@task.Category.CategoryName ?? "No Category"</td>
                             <td>@task.Completed</td>
                             
                             <!--Edit and Delete routes based on TaskId-->
@@ -237,9 +242,9 @@
                     @foreach (var task in Model.Where(t => t.Quadrant == 4))
                     {
                         <tr>
-                            <td>@task.Description</td>
+                            <td>@task.TaskName</td>
                             <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "No Due Date")</td>
-                            <td>@task.Category.Description</td>
+                            <td>@task.Category.CategoryName ?? "No Category"</td>
                             <td>@task.Completed</td>
 
                             <!--Edit and Delete routes based on TaskId-->

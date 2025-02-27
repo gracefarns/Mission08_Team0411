@@ -39,7 +39,7 @@ namespace Mission08_Team0411.Controllers
             var recordToEdit = _repo.Tasks
                 .Single(x => x.TaskId == id);
 
-            ViewBag.Categories = _repo.Category
+            ViewBag.Category = _repo.Categories
                 .OrderBy(x => x.CategoryName)
                 .ToList();
 

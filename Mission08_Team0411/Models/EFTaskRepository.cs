@@ -10,6 +10,8 @@
 
         public List<ToDo> Tasks => _context.Tasks.ToList();
 
+        public List<Category> Categories => _context.Categories.ToList();
+
         public void AddTask(ToDo toDo)
         {
             _context.Add(toDo);
@@ -18,12 +20,14 @@
 
         public void SaveChanges(ToDo toDo)
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
+
         }
 
         public void Update(ToDo toDo)
         {
-            throw new NotImplementedException();
+            _context.Update(toDo);
+            _context.SaveChanges();
         }
     }
 }

@@ -4,6 +4,8 @@
     {
         List<ToDo> Tasks { get; }
 
+        List<Category> Categories { get; }
+
         public void AddTask(ToDo toDo);
       
         public void SaveChanges(ToDo toDo);

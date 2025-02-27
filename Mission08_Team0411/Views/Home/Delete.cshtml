@@ -1,0 +1,18 @@
+﻿@page
+@model Mission08_Team0411.Views.Home.DeleteModel
+@{
+}
+
+@model Delete
+
+<h2>Confirm Deletion</h2>
+<h3>@Category.Title</h3>
+
+
+<form method="post">
+
+	<input type="hidden" asp-for="CategoryId" />
+
+	<button type="submit">Delete</button>
+	<a class="btn btn-info" asp-controller="Home" asp-action="CategoryList">Cancel</a>
+</form>

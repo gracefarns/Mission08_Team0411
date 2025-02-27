@@ -39,7 +39,7 @@ namespace Mission08_Team0411.Controllers
             var recordToEdit = _repo.Tasks
                 .Single(x => x.TaskId == id);
 
-            ViewBag.Category = _repo.Category
+            ViewBag.Categories = _repo.Category
                 .OrderBy(x => x.CategoryName)
                 .ToList();
 
@@ -52,7 +52,6 @@ namespace Mission08_Team0411.Controllers
         public IActionResult Edit(ToDo updatedInfo)
         {
             _repo.Update(updatedInfo);
-            _repo.SaveChanges(updatedInfo);
             return RedirectToAction("Index");
         }
 
@@ -63,7 +62,7 @@ namespace Mission08_Team0411.Controllers
             var recordToDelete = _repo.Tasks
                 .Single(x => x.TaskId == id);
 
-            return View(// right here we need to have the delete.cshtml);
+            return View("Delete");
         }
 
         // post route that takes a task and deletes it

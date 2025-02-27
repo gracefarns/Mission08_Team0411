@@ -15,5 +15,16 @@
             _context.Add(toDo);
             _context.SaveChanges();
         }
+
+        public void SaveChanges(ToDo toDo)
+        {
+            _context.SaveChanges();
+        }
+
+        public void Update(ToDo toDo)
+        {
+            _context.Update(toDo);
+            _context.SaveChanges();
+        }
     }
 }

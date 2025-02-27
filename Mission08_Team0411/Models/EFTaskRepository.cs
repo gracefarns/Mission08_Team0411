@@ -15,5 +15,15 @@
             _context.Add(toDo);
             _context.SaveChanges();
         }
+
+        public void SaveChanges(ToDo toDo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(ToDo toDo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

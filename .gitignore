@@ -91,6 +91,7 @@ StyleCopReport.xml
 *.tmp_proj
 *_wpftmp.csproj
 *.log
+*.idea
 *.vspscc
 *.vssscc
 .builds
@@ -361,4 +362,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Mission08_Team0411/Models/ITaskRepository.cs

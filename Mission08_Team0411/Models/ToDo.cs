@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mission08_Team0411.Models;
 
 public partial class ToDo
 {
+    [Key]
     public int TaskId { get; set; }
 
-    public string Description { get; set; } = null!;
+    public string TaskName { get; set; } = null!;
 
     public DateOnly? DueDate { get; set; }
 

@@ -1,0 +1,63 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Model
+
+<h1>@ViewData["Task"]</h1>
+
+<form asp-action="Create" method="post">
+    <!--Hiding our CategoryId during display-->
+    <input type="hidden" asp-for="CategoryId" />
+
+    <!--Task-->
+    <div>
+        <label asp-for="Task">Task:</label>
+        <input type="text" asp-for="Task" required />
+    </div>
+    <br />
+
+    <!--Due Date-->
+    <div>
+        <label asp-for="DueDate">Due Date:</label>
+        <input type="date" asp-for="DueDate"/>
+    </div>
+
+    <!--Quadrant-->
+    <div>
+        <label asp-for="Quadrant">Quadrant:</label>
+        <input type="number" asp-for="Quadrant" required />
+    </div>
+    <br />
+
+    <!--Completed-->
+    <div>
+        <label>Completed:</label><br />
+        <input type="radio" asp-for="Completed" value="true" id="completedYes" />
+        <label for="completedYes">Yes</label>
+        <input type="radio" asp-for="Completed" value="false" id="completedNo" />
+        <label for="completedNo">No</label>
+    </div>
+    <br />
+
+    <!--Category-->
+    <div>
+        <label asp-for="CategoryId">Category:</label>
+        <select asp-for="CategoryId">
+            <option value="">Select Category</option>
+            @foreach (category c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryId" >
+                    @category.CategoryName
+                </option>   
+            }
+        </select>
+    </div>
+
+    <!-- Dynamic submit button -->
+    <button type="submit">@ViewData["ButtonText"]</button>
+  
+    <div asp-validation-summary="All"></div>
+</form>

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mission08_Team0411.Models;
@@ -17,7 +18,20 @@ namespace Mission08_Team0411.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var tasks = _repo.Tasks.ToList();
+            var tasks = _repo.GetTasksWithCategories().ToList();
+            
+            // Debugging output (since we keep having so many errors)
+            foreach (var task in tasks)
+            {
+                Console.WriteLine($"Task: {task.TaskName}, Category: {task.Category?.CategoryName ?? "No Category"}");
+            }
+            
+            // Ensure model is never null
+            if (tasks == null || !tasks.Any())
+            {
+                tasks = new List<ToDo>(); // returns empty list instead of null
+            }
+            
             // this would be for editing var blah = _repo.Tasks.FirstOrDefault(x => x.TaskId == 1);
             return View(tasks);
         }
@@ -39,7 +53,7 @@ namespace Mission08_Team0411.Controllers
             var recordToEdit = _repo.Tasks
                 .Single(x => x.TaskId == id);
 
-            ViewBag.Category = _repo.Categories
+            ViewBag.Category = _repo.GetCategories()
                 .OrderBy(x => x.CategoryName)
                 .ToList();
 
@@ -52,6 +66,7 @@ namespace Mission08_Team0411.Controllers
         public IActionResult Edit(ToDo updatedInfo)
         {
             _repo.Update(updatedInfo);
+            _repo.SaveChanges(updatedInfo);
             return RedirectToAction("Index");
         }
 
@@ -60,19 +75,30 @@ namespace Mission08_Team0411.Controllers
         public IActionResult Delete(int id)
         {
             var recordToDelete = _repo.Tasks
-                .Single(x => x.TaskId == id);
+                .Include(t => t.Category)
+                .FirstOrDefault(x => x.TaskId == id);
 
-            return View("Delete");
+            if (recordToDelete == null)
+            {
+                return NotFound();
+            }
+            
+            return View("DeleteConfirmation", recordToDelete);
         }
 
         // post route that takes a task and deletes it
         [HttpPost]
-        public IActionResult Delete(ToDo t)
+        public IActionResult DeleteConfirmed(int id)
         {
-            _repo.Tasks.Remove(t);
-            _repo.SaveChanges(t);
+            var taskToDelete = _repo.Tasks
+                .FirstOrDefault(x => x.TaskId == id);
 
-            return RedirectToAction("DeleteConfirmation");
+            if (taskToDelete != null)
+            {
+                _repo.DeleteTask(taskToDelete);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 

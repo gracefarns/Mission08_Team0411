@@ -13,9 +13,9 @@
 <body>
 <div>
     <h1 style="color: darkred"><b>Confirm Deletion?</b></h1>
-    <h3>@Model.TaskName, @Model.Category.CategoryName, @Model.DueDate</h3>
+    <h3>You're deleting the task "@Model.TaskName" in the "@Model.Category.CategoryName" Category, is this correct?</h3>
 
-    <form method="post">
+    <form asp-action="DeleteConfirmed" method="post">
         <!--Make delete functionality work by referencing the
         TaskId-->
         <input type="hidden" asp-for="TaskId"/>

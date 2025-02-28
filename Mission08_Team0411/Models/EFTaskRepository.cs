@@ -1,4 +1,6 @@
-﻿namespace Mission08_Team0411.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Mission08_Team0411.Models
 {
     public class EFTaskRepository : ITaskRepository
     {
@@ -8,7 +10,8 @@
             _context = temp;
         }
 
-        public List<ToDo> Tasks => _context.Tasks.ToList();
+        public IQueryable<ToDo> Tasks => _context.Tasks
+            .Include(t => t.Category);
 
         public void AddTask(ToDo toDo)
         {
@@ -18,12 +21,35 @@
 
         public void SaveChanges(ToDo toDo)
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void Update(ToDo toDo)
         {
-            throw new NotImplementedException();
+            _context.Tasks.Update(toDo);
+            _context.SaveChanges();
+        }
+        
+        // Implement GetCategories() method
+        public List<Category> GetCategories()
+        {
+            return _context.Categories
+                .OrderBy(c => c.CategoryName)
+                .ToList();
+        }
+        
+        // Implement GetTasksWithCategories() method
+        public IQueryable<ToDo> GetTasksWithCategories()
+        {
+            return _context.Tasks
+                .Include(t => t.Category);
+        }
+        
+        // Create new method
+        public void DeleteTask(ToDo toDo)
+        {
+            _context.Tasks.Remove(toDo);
+            _context.SaveChanges();
         }
     }
 }

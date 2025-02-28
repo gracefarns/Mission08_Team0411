@@ -70,18 +70,34 @@ namespace Mission08_Team0411.Controllers
             return RedirectToAction("Index");
         }
 
+        // Add Action
+        [HttpGet]
+        public IActionResult Add_Edit()
+        {
+            ViewBag.Categories = _repo.Categories
+                .ToList();
+            return View("Add_Edit", new ToDo());
+        }
+
+        [HttpPost]
+        public IActionResult Add_Edit(ToDo response)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddTask(response);
+            }
+            
+            return RedirectToAction("Index");
+        }
+        
+        
+        
         // get route for the delete action that takes in the taskId
         [HttpGet]
         public IActionResult Delete(int id)
         {
             var recordToDelete = _repo.Tasks
-                .Include(t => t.Category)
-                .FirstOrDefault(x => x.TaskId == id);
-
-            if (recordToDelete == null)
-            {
-                return NotFound();
-            }
+                .Single(task => task.TaskId == id);
             
             return View("DeleteConfirmation", recordToDelete);
         }
@@ -91,7 +107,7 @@ namespace Mission08_Team0411.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             var taskToDelete = _repo.Tasks
-                .FirstOrDefault(x => x.TaskId == id);
+                .Single(task => task.TaskId == id);
 
             if (taskToDelete != null)
             {

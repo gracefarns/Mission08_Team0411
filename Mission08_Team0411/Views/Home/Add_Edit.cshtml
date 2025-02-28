@@ -4,7 +4,7 @@
 @{
 }
 
-@model Model
+@model ToDo
 
 <h1>@ViewData["Task"]</h1>
 
@@ -14,8 +14,8 @@
 
     <!--Task-->
     <div>
-        <label asp-for="Task">Task:</label>
-        <input type="text" asp-for="Task" required />
+        <label asp-for="TaskName">Task:</label>
+        <input type="text" asp-for="TaskName" required />
     </div>
     <br />
 
@@ -47,10 +47,10 @@
         <label asp-for="CategoryId">Category:</label>
         <select asp-for="CategoryId">
             <option value="">Select Category</option>
-            @foreach (category c in ViewBag.Categories)
+            @foreach (Category c in ViewBag.Categories)
             {
                 <option value="@c.CategoryId" >
-                    @category.CategoryName
+                    @c.CategoryName
                 </option>   
             }
         </select>

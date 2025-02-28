@@ -2,7 +2,7 @@
 {
     public interface ITaskRepository
     {
-        IQueryable<ToDo> Tasks { get; }
+        List<ToDo> Tasks { get; }
 
         List<Category> Categories { get; }
 

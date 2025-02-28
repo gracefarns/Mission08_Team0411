@@ -10,8 +10,10 @@ namespace Mission08_Team0411.Models
             _context = temp;
         }
 
-        public IQueryable<ToDo> Tasks => _context.Tasks
-            .Include(t => t.Category);
+        public List<ToDo> Tasks => _context.Tasks.ToList();
+
+
+        public List<Category> Categories => _context.Categories.ToList();
 
         public void AddTask(ToDo toDo)
         {

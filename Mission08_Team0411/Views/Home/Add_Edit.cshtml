@@ -9,8 +9,8 @@
 <h1>@ViewData["Task"]</h1>
 
 <form asp-action="Create" method="post">
-    <!--Hiding our MovieId during display-->
-    <input type="hidden" asp-for="MovieId" />
+    <!--Hiding our CategoryId during display-->
+    <input type="hidden" asp-for="CategoryId" />
 
     <!--Task-->
     <div>
@@ -21,58 +21,43 @@
 
     <!--Due Date-->
     <div>
-        <label asp-for="Date">Due Date:</label>
-        <input type="text" asp-for="Task"/>
+        <label asp-for="DueDate">Due Date:</label>
+        <input type="date" asp-for="DueDate"/>
     </div>
+
     <!--Quadrant-->
     <div>
         <label asp-for="Quadrant">Quadrant:</label>
         <input type="number" asp-for="Quadrant" required />
     </div>
     <br />
+
     <!--Completed-->
     <div>
         <label>Completed:</label><br />
-
-        <input type="radio" asp-for="Completed" value="true" id="editedYes" />
-        <label for="editedYes">Yes</label>
-
-        <input type="radio" asp-for="Completed" value="false" id="editedNo" />
-        <label for="editedNo">No</label>
+        <input type="radio" asp-for="Completed" value="true" id="completedYes" />
+        <label for="completedYes">Yes</label>
+        <input type="radio" asp-for="Completed" value="false" id="completedNo" />
+        <label for="completedNo">No</label>
     </div>
     <br />
-  
-    <!--Category-->
-    <div>
-        <label asp-for="Rating">Category:</label>
-        <select asp-for="Category">
-            <option value="Home">Home</option>
-            <option value="School">School</option>
-            <option value="Work">Work</option>
-            <option value="Church">Church</option>
-        </select>
-    </div>
 
-    <!-- <input asp-for="ApplicationId" type="hidden" />
-    Commented this out because we dont want the user to see it in our Edit or when entering the data-->
     <!--Category-->
     <div>
+        <label asp-for="CategoryId">Category:</label>
         <select asp-for="CategoryId">
-            <!-- Default option prompt for the user -->
-            <option value="">Select Category:</option>
-            <!-- Loop through each Category in the ViewBag to generate the options dynamically -->
-            @foreach (Category m in ViewBag.Majors)
+            <option value="">Select Category</option>
+            @foreach (category c in ViewBag.Categories)
             {
-                <!-- For each Category object, create an option element with the CategoryId as the value and CategoryName as the display text -->
-                <option value="@m.CategoryId">@m.CategoryName</option>
+                <option value="@c.CategoryId" >
+                    @category.CategoryName
+                </option>   
             }
         </select>
-
     </div>
 
-    <button type="submit">Add Task</button>
-    <button type="submit">Edit Task</button>
-
-
+    <!-- Dynamic submit button -->
+    <button type="submit">@ViewData["ButtonText"]</button>
+  
     <div asp-validation-summary="All"></div>
 </form>

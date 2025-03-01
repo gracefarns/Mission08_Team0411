@@ -53,7 +53,7 @@ namespace Mission08_Team0411.Controllers
             var recordToEdit = _repo.Tasks
                 .Single(x => x.TaskId == id);
 
-            ViewBag.Category = _repo.GetCategories()
+            ViewBag.Categories = _repo.GetCategories()
                 .OrderBy(x => x.CategoryName)
                 .ToList();
 
@@ -96,8 +96,10 @@ namespace Mission08_Team0411.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var recordToDelete = _repo.Tasks
+            var recordToDelete = _repo
+                .GetTasksWithCategories()
                 .Single(task => task.TaskId == id);
+
             
             return View("DeleteConfirmation", recordToDelete);
         }

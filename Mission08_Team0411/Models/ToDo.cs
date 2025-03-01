@@ -20,5 +20,5 @@ public partial class ToDo
 
     public bool Completed { get; set; }
 
-    public virtual Category Category { get; set; } = null!;
+    public virtual Category? Category { get; set; }
 }

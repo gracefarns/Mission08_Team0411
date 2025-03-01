@@ -12,7 +12,7 @@
     <h1 style="color: darkred"><b>Confirm Deletion?</b></h1>
     <h3>You're deleting the task "@Model.TaskName" in the "@Model.Category.CategoryName" Category, is this correct?</h3>
 
-    <form asp-action="DeleteConfirmed" method="post">
+    <form asp-controller="Home" asp-action="DeleteConfirmed" method="post">
         <!--Make delete functionality work by referencing the
         TaskId-->
         <input type="hidden" asp-for="TaskId"/>
@@ -23,7 +23,7 @@
 
         <!--If I cancel deletion, it will simply send you
         back to the Task List page (aka the Home page/index)-->
-        <a class="btn btn-info" asp-controller="Home" asp-action="Index">Cancel</a>
+            <a class="btn btn-info" asp-controller="Home" asp-action="Index">Cancel</a>
     </form>
 </div>
 </body>

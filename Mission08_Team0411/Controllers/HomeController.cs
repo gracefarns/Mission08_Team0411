@@ -108,7 +108,7 @@ namespace Mission08_Team0411.Controllers
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
-            var taskToDelete = _repo.Tasks
+            var taskToDelete = _repo.GetTasksWithCategories()
                 .Single(task => task.TaskId == id);
 
             if (taskToDelete != null)
